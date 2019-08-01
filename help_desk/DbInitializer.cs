@@ -7,14 +7,43 @@ namespace help_desk
 {
     public class DbInitializer
     {
+      static public  Models.Company[] companies;
+        static public Models.Department[] departments;
         public static void Initialize(ApplicationContext context)
         {
+            if (!context.Companies.Any())
+            {
+                 companies = new Models.Company[]
+                 {
+                    new Models.Company{ Name = "GodCompany", Address = "Soviet Unoin" }
+
+                 };
+                foreach (Models.Company c in companies)
+                {
+                    context.Companies.Add(c);
+                }
+                context.SaveChanges();
+            }
+
+            if (!context.Departments.Any())
+            {
+                departments = new Models.Department[]
+                {
+                    new Models.Department{ Name = "General", Adress = "Soviet Union", CompanyId = companies[0].Id, Slug=Helpers.SlugGenerator.GenerateSlug("General") }
+
+                };
+                foreach (Models.Department d in departments)
+                {
+                    context.Departments.Add(d);
+                }
+                context.SaveChanges();
+            }
 
             if (!context.Users.Any())
             {
                 var users = new Models.User[]
                  {
-                    new Models.User{Fname="Yan", Lname="Kolovorotny", Login="Somelog", Email="yankolovorotny@gmail.com", Phone="somephone"},
+                    new Models.User{Fname="Yan", Lname="Kolovorotny", Login="Somelog", Email="yankolovorotny@gmail.com", Phone="somephone", DepartmentId = departments[0].Id, Password = "super7secret7password7"}
 
                  };
                 foreach (Models.User us in users)

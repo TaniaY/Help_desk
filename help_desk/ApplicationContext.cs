@@ -35,17 +35,46 @@ namespace help_desk
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // base.OnModelCreating(modelBuilder);
+            #region <!--strings for using SoftDelee in concret Tables-->
+            modelBuilder.Entity<Models.Attachment>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Attachment>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
 
-            //strings for using SoftDelee in concret Tables
-            //modelBuilder.Entity<Models.GroupsPermission>().Property<bool>("isDeleted");
-            //modelBuilder.Entity<Models.GroupsPermission>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+            modelBuilder.Entity<Models.Comment>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Comment>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
 
-            //modelBuilder.Entity<Models.UsersGroup>().Property<bool>("isDeleted");
-            //modelBuilder.Entity<Models.UsersGroup>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+            modelBuilder.Entity<Models.Company>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Company>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
 
-            //modelBuilder.Entity<Models.InvitesGroup>().Property<bool>("isDeleted");
-            //modelBuilder.Entity<Models.InvitesGroup>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+            modelBuilder.Entity<Models.Department>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Department>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Group>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Group>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Invite>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Invite>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Permission>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Permission>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Priority>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Priority>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Statuse>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Statuse>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Template>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Template>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.TemplatesCategory>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.TemplatesCategory>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.Ticket>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.Ticket>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+
+            modelBuilder.Entity<Models.User>().Property<bool>("isDeleted");
+            modelBuilder.Entity<Models.User>().HasQueryFilter(m => EF.Property<bool>(m, "isDeleted") == false);
+            #endregion
 
             #region <!--strings to create a many-to-many relationships-->
             //GroupsPermission
@@ -128,6 +157,13 @@ namespace help_desk
       .HasOne(u => u.Cattachment)
       .WithOne(p => p.Atcomment)
       .HasForeignKey<Models.Attachment>(p => p.CommentId);
+
+            modelBuilder
+      .Entity<Models.Department>()
+      .HasOne(u => u.DUser)
+      .WithOne(p => p.UDepartment)
+      .HasForeignKey<Models.User>(p => p.DepartmentId);
+
             #endregion
 
             #region <!-- tables naming -->
@@ -150,34 +186,34 @@ namespace help_desk
             #endregion
         }
         #region <!--region with methods that make SoftDelete work -->
-        //public override int SaveChanges()
-        //{
-        //    UpdateSoftDeleteStatuses();
-        //    return base.SaveChanges();
-        //}
+        public override int SaveChanges()
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChanges();
+        }
 
-        //public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    UpdateSoftDeleteStatuses();
-        //    return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        //}
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
-        //private void UpdateSoftDeleteStatuses()
-        //{
-        //    foreach (var entry in ChangeTracker.Entries())
-        //    {
-        //        switch (entry.State)
-        //        {
-        //            case EntityState.Added:
-        //                entry.CurrentValues["isDeleted"] = false;
-        //                break;
-        //            case EntityState.Deleted:
-        //                entry.State = EntityState.Modified;
-        //                entry.CurrentValues["isDeleted"] = true;
-        //                break;
-        //        }
-        //    }
-        //}
+        private void UpdateSoftDeleteStatuses()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["isDeleted"] = false;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["isDeleted"] = true;
+                        break;
+                }
+            }
+        }
         #endregion
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using help_desk;
@@ -9,9 +10,10 @@ using help_desk;
 namespace help_desk.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190731111749_NewRelationship")]
+    partial class NewRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -56,8 +56,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<bool>("isDeleted");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TicketId");
@@ -75,8 +73,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -99,8 +95,6 @@ namespace help_desk.Migrations
                     b.Property<string>("Slug")
                         .IsRequired();
 
-                    b.Property<bool>("isDeleted");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId")
@@ -121,8 +115,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Slug")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -158,8 +150,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -199,8 +189,6 @@ namespace help_desk.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<bool>("isDeleted");
-
                     b.HasKey("Id");
 
                     b.ToTable("permissions");
@@ -220,8 +208,6 @@ namespace help_desk.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<bool>("isDeleted");
-
                     b.HasKey("Id");
 
                     b.ToTable("priorities");
@@ -237,8 +223,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -262,8 +246,6 @@ namespace help_desk.Migrations
 
                     b.Property<int?>("TTemplatesCategoryId");
 
-                    b.Property<bool>("isDeleted");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId")
@@ -285,8 +267,6 @@ namespace help_desk.Migrations
                     b.Property<int>("Order");
 
                     b.Property<int>("ParentId");
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -315,8 +295,6 @@ namespace help_desk.Migrations
                     b.Property<int>("TemplateId");
 
                     b.Property<string>("Title");
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -360,8 +338,6 @@ namespace help_desk.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired();
-
-                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 

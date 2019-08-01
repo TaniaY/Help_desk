@@ -21,6 +21,7 @@ namespace help_desk.Models
         public Company DCompany { get; set; }
 
         public List<Invite> DInvite { get; set; }
-        
+
+        public User DUser { get; set; }
     }
 }

@@ -10,6 +10,8 @@
     <Compile Remove="Migrations\20190728112552_RelationshipsAdding.Designer.cs" />
     <Compile Remove="Migrations\20190728123709_Relationships.cs" />
     <Compile Remove="Migrations\20190728123709_Relationships.Designer.cs" />
+    <Compile Remove="Migrations\20190731121021_SoftDeleteAdding.cs" />
+    <Compile Remove="Migrations\20190731121021_SoftDeleteAdding.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
