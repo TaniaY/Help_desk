@@ -9,6 +9,7 @@ namespace help_desk.Models
 {
     public class User
     {
+        private string pas;
         [Key]
         public int Id { get; set; }
         [Required]
@@ -21,7 +22,9 @@ namespace help_desk.Models
         public string Email { get; set; }
         [Required]
         public string Phone { get; set; }
-        public string Password { get; set; }
+        public string Password
+        { get {return pas; }
+          set {pas = BCrypt.Net.BCrypt.HashPassword(Login); }  }
         public int DepartmentId { get; set; }
         public Department UDepartment { get; set; }
 
